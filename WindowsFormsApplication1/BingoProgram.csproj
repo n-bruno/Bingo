@@ -49,13 +49,13 @@
     <Compile Include="CalledNumbersList.cs" />
     <Compile Include="InternalCardClass2DimArray.cs" />
     <Compile Include="RNGType.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserInterface.Designer.cs">
       <DependentUpon>UserInterface.cs</DependentUpon>
     </Compile>
-    <Compile Include="StartHere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="UserInterface.resx">
       <DependentUpon>UserInterface.cs</DependentUpon>

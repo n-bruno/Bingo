@@ -6,17 +6,13 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1 {
-    public partial class UserInterface : Form {
+namespace Bingo
+{
+    public partial class UserInterface : Form
+    {
         private const int RNGRange = 15;        //range of number per bingo column
         private const int BINGOCARDSIZE = 5;    //a constant to delcare a card's size
 
@@ -29,12 +25,14 @@ namespace WindowsFormsApplication1 {
         //a class that stores values to calculate if the player has bingo
         private InternalCardClass2DimArray record = new InternalCardClass2DimArray(BINGOCARDSIZE);
 
-        public UserInterface() {
+        public UserInterface()
+        {
             InitializeComponent();
         }
 
         //A class to generate the next random number
-        private void getNextNumber() {
+        private void getNextNumber()
+        {
             RNGType rand = new RNGType();
             textBox_number_called.Text = Convert.ToString(rand.getNextUniqueRandomValue(1,
                                                 BINGOCARDSIZE * RNGRange, used));
@@ -42,9 +40,11 @@ namespace WindowsFormsApplication1 {
         /*
          * Executes the program and confirms a name has been entered
          */
-        private void button_go_Click(object sender, EventArgs e) {
-            if (textBox_enter_name.Text != "") {        //check if the name is not empty 
-                createCard();                           //creates the bingo card
+        private void Button_go_Click(object sender, EventArgs e)
+        {
+            if (textBox_enter_name.Text != "")
+            {        //check if the name is not empty 
+                CreateCard();                           //creates the bingo card
                 button_dont_have.Visible = true;        //make the don't have button visible
                 textBox_number_called.Visible = true;   //number called field visible
                 button_go.Enabled = false;              //disable go button
@@ -56,15 +56,17 @@ namespace WindowsFormsApplication1 {
                 MessageBox.Show("You haven't entered a name.", "Error");
         }
 
-        private void button_exit_Click(object sender, EventArgs e) { //if the x is pressed, terminate the program
+        private void Button_exit_Click(object sender, EventArgs e)
+        { //if the x is pressed, terminate the program
             MessageBox.Show("Now exiting the program. Press OK to continue.", "Message", MessageBoxButtons.OK);
             Application.Exit();
         }
         /*
-         *  professor Friedman's code that creates the GUI of the card
+         *  Professor Friedman's code that creates the GUI of the card
          *  Speaks for itself, no?
          */
-        private void createCard() {
+        private void CreateCard()
+        {
             int numOfPossibleNumbers = BINGOCARDSIZE * RNGRange;
 
             // Total width and height of a card cell
@@ -106,22 +108,26 @@ namespace WindowsFormsApplication1 {
             bingoLetters[4] = 'G';
             bingoLetters[5] = 'O';
 
-            for (int xx = 1; xx <= BINGOCARDSIZE; xx++) {
+            for (int xx = 1; xx <= BINGOCARDSIZE; xx++)
+            {
                 loc.Y = topMargin + xx * (size.Height + padding);
                 int extraLeftPadding = 50;
-                for (int yy = 1; yy <= BINGOCARDSIZE; yy++) {
+                for (int yy = 1; yy <= BINGOCARDSIZE; yy++)
+                {
                     newButton[xx, yy] = new Button();
                     newButton[xx, yy].Location = new Point(extraLeftPadding + (yy - 1) * (size.Width + padding) + barWidth, loc.Y);
                     newButton[xx, yy].Size = size;
                     newButton[xx, yy].Font = new Font("Arial", 24, FontStyle.Bold);
 
-                    if (xx == BINGOCARDSIZE / 2 + 1 && yy == BINGOCARDSIZE / 2 + 1) {
+                    if (xx == BINGOCARDSIZE / 2 + 1 && yy == BINGOCARDSIZE / 2 + 1)
+                    {
                         newButton[xx, yy].Font = new Font("Arial", 10, FontStyle.Bold);
                         newButton[xx, yy].Text = "Free \n Space";
                         newButton[xx, yy].BackColor = System.Drawing.Color.Orange;
                         newButton[xx, yy].Enabled = false;
                     }
-                    else {
+                    else
+                    {
                         newButton[xx, yy].Font = new Font("Arial", 24, FontStyle.Bold);
                         newButton[xx, yy].Text = RNGObj.getRandomValue(bingoLetters[yy], ButtonRNGused).ToString();
                         newButton[xx, yy].Enabled = true;
@@ -158,14 +164,16 @@ namespace WindowsFormsApplication1 {
         /*
          * An event for clicking the bingo numbers
          */
-        private void Button_Click(object sender, EventArgs e) {
+        private void Button_Click(object sender, EventArgs e)
+        {
             Button btn = (Button)sender;
 
             //checks if called number matches the bingo card's numbers
             //Change "!=" to "==" for easy debugging
             if (int.Parse(textBox_number_called.Text) != int.Parse(btn.Text)) //not the right number
                 MessageBox.Show("This isn't the number called!", "Message", MessageBoxButtons.OK);
-            else { //there's a match
+            else
+            { //there's a match
 
                 /* grab the bingo button's coordinates from its name.
                  * in the create card method we made it so the card's internal name
@@ -176,14 +184,15 @@ namespace WindowsFormsApplication1 {
                 int ycoord = Convert.ToInt16(btn.Name.Substring(4, 1));
 
                 //record the bingo buttons coordinate as called in the record variable
-                record.recordCalledNumber(xcoord, ycoord);
+                record.RecordCalledNumber(xcoord, ycoord);
 
                 btn.Enabled = false;    //disable the number you marked that matches the called number
 
                 //this method returns how many bingos the player has
                 //and stores how many in the int "win"
                 int win = record.IsWinner();
-                if (win > 0) { //at least one bingo?
+                if (win > 0)
+                { //at least one bingo?
                     //You win!
                     button_dont_have.Enabled = false;
 
@@ -195,8 +204,10 @@ namespace WindowsFormsApplication1 {
                         " game", "You Win!", MessageBoxButtons.OK);
                     //set up things for a new game
 
-                    for (int row = 1; row <= BINGOCARDSIZE; row++) { //remove all buttons
-                        for (int col = 1; col <= BINGOCARDSIZE; col++) {
+                    for (int row = 1; row <= BINGOCARDSIZE; row++)
+                    { //remove all buttons
+                        for (int col = 1; col <= BINGOCARDSIZE; col++)
+                        {
                             this.Controls.Remove(newButton[row, col]);
                         }
                     }
@@ -204,7 +215,7 @@ namespace WindowsFormsApplication1 {
                     used = new CalledNumbersList(RNGRange * BINGOCARDSIZE);
                     record = new InternalCardClass2DimArray(BINGOCARDSIZE);
 
-                    createCard();                           //creates new bingo card
+                    CreateCard();                           //creates new bingo card
                     button_dont_have.Enabled = true;
                 }
 
@@ -216,28 +227,33 @@ namespace WindowsFormsApplication1 {
         /*
          * Method for when you click the "don't have" button"
          */
-        private void button_dont_have_Click(object sender, EventArgs e) {
+        private void Button_dont_have_Click(object sender, EventArgs e)
+        {
             bool isPlayerWrong = false;
 
             /*
              * Check every button in the newButton array to confirm the player 
              * actually doesn't have the number. Store the results in "isPlayerWrong"
              */
-            for (int i = 1; i <= BINGOCARDSIZE && !isPlayerWrong; i++) {
-                for (int j = 1; j <= BINGOCARDSIZE && !isPlayerWrong; j++) {
-                    if (newButton[i,j].Text.Equals(textBox_number_called.Text)) {
+            for (int i = 1; i <= BINGOCARDSIZE && !isPlayerWrong; i++)
+            {
+                for (int j = 1; j <= BINGOCARDSIZE && !isPlayerWrong; j++)
+                {
+                    if (newButton[i, j].Text.Equals(textBox_number_called.Text))
+                    {
                         isPlayerWrong = true; //set this variable to false to exit the loops
                     }
                 }
             }
             //was the player wrong about not having the called number?
-            if (!isPlayerWrong) 
+            if (!isPlayerWrong)
                 getNextNumber(); //they were right!
             else
                 MessageBox.Show("Check Again", "Message", MessageBoxButtons.OK); //they were wrong
         }
 
-        private void UserInterface_Load(object sender, EventArgs e) {
+        private void UserInterface_Load(object sender, EventArgs e)
+        {
             this.CenterToScreen(); //put window in center of screen
         }
     }

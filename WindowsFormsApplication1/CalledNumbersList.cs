@@ -5,17 +5,12 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1 {
-    public class CalledNumbersList {
+namespace Bingo
+{
+    public class CalledNumbersList
+    {
         private int ListSize; //max number of values that can be used for the bingo game.
         //I am aware that Professor Friedman suggested this to be constant
         //But I want this program to be flexible for different card sizes.
@@ -23,7 +18,8 @@ namespace WindowsFormsApplication1 {
         public bool[] UsedNumberObj;
         private int counterSize; //stores the amount of numbers that have been called
 
-        public CalledNumbersList(int RNGRange) {
+        public CalledNumbersList(int RNGRange)
+        {
             ListSize = RNGRange;                    //for this project it is 75
 
             UsedNumberObj = new bool[RNGRange + 1];
@@ -36,19 +32,22 @@ namespace WindowsFormsApplication1 {
         }
 
         //report if a number is used or not
-        public bool isNumberUsed(int checkNumber) {
-            return UsedNumberObj[checkNumber];
-        }
+        public bool IsNumberUsed(int checkNumber)
+        { return UsedNumberObj[checkNumber]; }
 
         //Stores a number as used
-        public void setNumberAsUsed(int setNumber) {
+        public void SetNumberAsUsed(int setNumber)
+        {
             UsedNumberObj[setNumber] = true;
             counterSize++; //increment counter
         }
 
         //Check if exhausted all possible numbers
-        public void availableNumbersToCallCheck(){
-            if (counterSize == ListSize - 1) { //Check if all numbers are called
+        public void AvailableNumbersToCallCheck()
+        {
+            //Check if all numbers are called
+            if (counterSize == ListSize - 1)
+            {
                 MessageBox.Show("Exhausted all possible numbers. Terminating program.", "Error");
                 Environment.Exit(0);
                 //Terminate the program for an error that should never happen
@@ -56,19 +55,10 @@ namespace WindowsFormsApplication1 {
         }
 
         //Print all index values (DEBUG PURPOSES)
-        public void printUsedNumbers() {
-            int i = 1;
-            string String;
-
-            while(i <= ListSize) {
-                if (UsedNumberObj[i] == false)
-                    String = "unused";
-                else
-                    String = "used";
-
-                Console.WriteLine("Number : " + i + " is " + String);
-                i++;
-            }
+        public void PrintUsedNumbers()
+        {
+            for (int i = 0; i <= ListSize; i++)
+                Console.WriteLine("Number : " + i + " is " + (UsedNumberObj[i] ? "" : "un") + "used");
             Console.WriteLine("Numbers recorded as used : " + counterSize);
         }
     }

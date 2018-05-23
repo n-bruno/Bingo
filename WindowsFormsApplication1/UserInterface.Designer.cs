@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1 { 
+﻿namespace Bingo { 
     partial class UserInterface
     {
         /// <summary>
@@ -56,7 +56,7 @@
             this.button_go.TabIndex = 1;
             this.button_go.Text = "Go!";
             this.button_go.UseVisualStyleBackColor = false;
-            this.button_go.Click += new System.EventHandler(this.button_go_Click);
+            this.button_go.Click += new System.EventHandler(this.Button_go_Click);
             // 
             // button_exit
             // 
@@ -68,7 +68,7 @@
             this.button_exit.TabIndex = 2;
             this.button_exit.Text = "Exit.";
             this.button_exit.UseVisualStyleBackColor = false;
-            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
+            this.button_exit.Click += new System.EventHandler(this.Button_exit_Click);
             // 
             // label_your_name
             // 
@@ -114,7 +114,7 @@
             this.button_dont_have.Text = "Don\'t have";
             this.button_dont_have.UseVisualStyleBackColor = false;
             this.button_dont_have.Visible = false;
-            this.button_dont_have.Click += new System.EventHandler(this.button_dont_have_Click);
+            this.button_dont_have.Click += new System.EventHandler(this.Button_dont_have_Click);
             // 
             // UserInterface
             // 
